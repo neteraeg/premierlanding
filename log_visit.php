@@ -4,6 +4,25 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+// --- Debug Logging ---
+$debugLogPath = __DIR__ . '/debug.log';
+function log_debug($message, $data = []) {
+    global $debugLogPath;
+    $logEntry = date('[Y-m-d H:i:s]') . ' ' . $message;
+    if (!empty($data)) {
+        $logEntry .= "\n" . json_encode($data, JSON_PRETTY_PRINT);
+    }
+    $logEntry .= "\n";
+    
+    // Write to file
+    if (is_writable($debugLogPath)) {
+        file_put_contents($debugLogPath, $logEntry, FILE_APPEND);
+    }
+    
+    // Output to browser console
+    echo "<!-- DEBUG: " . htmlspecialchars($logEntry) . " -->\n";
+}
+
 // --- Database Configuration ---
 $dbHost = 'localhost';
 $dbUser = 'u305610349_premier';
@@ -14,6 +33,10 @@ $dbName = 'u305610349_premier';
 $dbTable = 'visitor_logs';
 
 // --- Script Logic ---
+log_debug('Script initialized', [
+    'client_ip' => $_SERVER['REMOTE_ADDR'] ?? 'none',
+    'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? 'none'
+]);
 $response = ['status' => 'error', 'message' => 'Unknown error']; // Default error response
 
 // 1. Get Visitor Info
@@ -22,6 +45,11 @@ $ipAddress = filter_var($_SERVER['REMOTE_ADDR'] ?? 'UNKNOWN', FILTER_VALIDATE_IP
 $userAgent = isset($_SERVER['HTTP_USER_AGENT']) ? htmlspecialchars($_SERVER['HTTP_USER_AGENT'], ENT_QUOTES, 'UTF-8') : 'UNKNOWN';
 $phoneNumberInput = isset($_POST['phoneNumber']) ? trim($_POST['phoneNumber']) : '';
 $phoneNumber = !empty($phoneNumberInput) ? htmlspecialchars($phoneNumberInput, ENT_QUOTES, 'UTF-8') : null;
+log_debug('Visitor info collected', [
+    'ip' => $ipAddress,
+    'user_agent' => $userAgent,
+    'phone_number' => $phoneNumber ? 'provided' : 'not_provided'
+]);
 
 
 if (!$ipAddress) {
@@ -29,6 +57,11 @@ if (!$ipAddress) {
 }
 
 // 2. Connect to the database
+log_debug('Attempting database connection', [
+    'host' => $dbHost,
+    'user' => $dbUser,
+    'database' => $dbName
+]);
 $conn = @new mysqli($dbHost, $dbUser, $dbPass, $dbName);
 
 if ($conn->connect_error) {
