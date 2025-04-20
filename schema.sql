@@ -12,7 +12,8 @@ CREATE TABLE IF NOT EXISTS visitor_logs (
     ip_address VARCHAR(45) NOT NULL,
     user_agent TEXT NOT NULL,
     phone_number VARCHAR(20),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    visit_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    lead_id INT
 );
 
 -- Leads table (if needed by other parts of the application)

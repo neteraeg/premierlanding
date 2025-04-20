@@ -113,7 +113,7 @@ $sql = "INSERT INTO " . $dbTable . " (ip_address, user_agent)
         WHERE NOT EXISTS (
             SELECT 1 FROM " . $dbTable . " 
             WHERE ip_address = ? 
-            AND visit_time > NOW() - INTERVAL 24 HOUR
+            AND visit_timestamp > NOW() - INTERVAL 24 HOUR
         )";
 $stmt = $conn->prepare($sql);
 
