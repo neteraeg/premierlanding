@@ -1,0 +1,505 @@
+/* General Styles & Mobile First */
+:root {
+    --primary-color: #446472; /* Darker blue/grey */
+    --secondary-color: #97887f; /* Lighter taupe/brown */
+    --text-color: #333;
+    --bg-color: #f8f8f8; /* Light background */
+    --card-bg: #ffffff;
+    --card-border: #e0e0e0;
+    --card-selected-border: var(--primary-color);
+    --button-text: #ffffff;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align top for scroll */
+    min-height: 100vh;
+    /* Removed body padding, apply to steps if needed */
+}
+
+/* Removed .container styles */
+
+h1, h2, h3 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+h2 {
+    margin-top: 10px;
+    margin-bottom: 25px; /* More space below step titles */
+}
+
+p {
+    margin-bottom: 20px;
+    color: #555;
+}
+
+.logo {
+    max-width: 150px;
+    margin-bottom: 20px;
+}
+
+.step-logo { /* Style for logo inside steps */
+    max-width: 250px; /* Updated max-width */
+    margin-bottom: 25px; /* Space below logo */
+    align-self: center; /* Center the logo horizontally within the flex column */
+}
+
+
+/* Step Visibility & Layout */
+.step {
+    display: none; /* Hide all steps initially */
+    animation: fadeIn 0.5s ease-in-out;
+    padding: 30px 15px; /* Add padding directly to steps */
+    max-width: 600px; /* Limit width for readability on larger screens */
+    margin: 0 auto; /* Center steps */
+    min-height: 80vh; /* Ensure step takes up significant height */
+    /* display: flex; */ /* Base display is none, active class handles flex */
+    flex-direction: column;
+    justify-content: center; /* Center content vertically */
+    text-align: center;
+}
+
+/* Removed rule that forced #step-0 to always display */
+
+.step.active {
+    display: flex; /* Show active step using flex */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px; /* Rounded buttons */
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin: 5px;
+    width: auto; /* Adjust width automatically */
+    min-width: 120px;
+}
+
+.btn i {
+    margin-left: 8px;
+    margin-right: -5px; /* Adjust icon spacing */
+}
+
+.btn-prev i {
+    margin-right: 8px;
+    margin-left: -5px;
+}
+
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--button-text);
+}
+
+.btn-primary:hover {
+    background-color: #36505a; /* Darker shade */
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: var(--button-text);
+}
+
+.btn-secondary:hover {
+    background-color: #8a7c74; /* Darker shade */
+}
+
+.btn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.btn:active {
+    transform: scale(0.98); /* Click effect */
+}
+
+.navigation-buttons {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between; /* Space out prev/next */
+    flex-wrap: wrap; /* Wrap if needed */
+}
+
+.navigation-buttons .btn-next,
+.navigation-buttons .btn-submit {
+    margin-left: auto; /* Push next/submit to the right */
+}
+
+/* Welcome Screen */
+#welcome-screen {
+    /* Removed specific padding for welcome screen */
+}
+
+
+/* Progress Indicator */
+.progress-indicator {
+    position: fixed; /* Keep progress bar fixed at the top */
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--card-bg); /* Give it a background */
+    padding: 10px 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    z-index: 10;
+    /* Removed margin-bottom */
+    text-align: center;
+}
+
+#progress-text {
+    display: block;
+    margin-bottom: 5px; /* Reduced margin */
+    font-size: 0.9rem;
+    color: #777;
+}
+
+.progress-bar-container {
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    height: 10px;
+    overflow: hidden;
+    max-width: 500px; /* Match step max-width */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.progress-bar {
+    width: 0%; /* Initial width */
+    height: 100%;
+    background-color: var(--primary-color);
+    /* Removed border-radius for full width bar */
+    transition: width 0.4s ease-in-out;
+}
+
+/* Add top padding to steps to account for fixed progress bar */
+.step {
+    padding-top: 80px; /* Adjust as needed based on progress bar height */
+    /* Keep other padding from the original .step rule */
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 30px;
+}
+
+/* Language Card Specifics */
+.lang-card i {
+    color: var(--primary-color); /* Make globe icon primary color */
+}
+
+.lang-flag { /* Style for flag emojis */
+    display: block; /* Ensure it takes its own line */
+    font-size: 2.5em; /* Make flags larger */
+    margin-bottom: 10px;
+}
+
+
+/* Card Selection Styles */
+.card-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two columns */
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.card {
+    background-color: var(--card-bg);
+    border: 2px solid var(--card-border);
+    border-radius: 10px;
+    padding: 20px 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.card i {
+    color: var(--secondary-color);
+    margin-bottom: 10px;
+    transition: color 0.3s ease;
+}
+
+.card span {
+    display: block;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+}
+
+.card.selected {
+    border-color: var(--card-selected-border);
+    box-shadow: 0 0 0 3px rgba(68, 100, 114, 0.3); /* Primary color glow */
+}
+
+.card.selected i {
+    color: var(--primary-color);
+}
+
+/* Age Slider */
+.slider-container {
+    margin: 30px 0;
+    padding: 0 10px; /* Padding for thumb */
+}
+
+#age-slider {
+    width: 100%;
+    cursor: pointer;
+    height: 8px;
+    background: #ddd;
+    border-radius: 5px;
+    outline: none;
+    appearance: none; /* Override default look */
+    -webkit-appearance: none;
+}
+
+/* Slider Thumb - Webkit */
+#age-slider::-webkit-slider-thumb {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* Slider Thumb - Firefox */
+#age-slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none; /* Remove default border */
+}
+
+
+#age-value {
+    display: block;
+    margin-top: 15px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+/* Results Screen */
+#results-screen h2 {
+    color: var(--primary-color);
+}
+
+#recommendations {
+    background-color: #eaf0f2; /* Light background for recommendations */
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+#recommendations p {
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+}
+
+#recommendations ul {
+    list-style: none; /* Remove default bullets */
+    padding-left: 0;
+}
+
+#recommendations li {
+    margin-bottom: 8px;
+    padding-left: 20px;
+    position: relative;
+}
+
+#recommendations li::before {
+    content: "\f00c"; /* Font Awesome check icon */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    color: var(--primary-color);
+    position: absolute;
+    left: 0;
+    top: 2px;
+}
+
+
+.contact-options {
+    margin-bottom: 30px;
+    border-top: 1px solid var(--card-border);
+    padding-top: 25px;
+}
+
+.contact-options h3 {
+    margin-bottom: 15px;
+}
+
+.btn-contact {
+    display: block; /* Make buttons full width */
+    width: 100%;
+    max-width: 300px; /* Limit width on larger screens */
+    margin: 10px auto; /* Center buttons */
+    padding: 15px; /* Larger buttons */
+}
+
+.btn-contact i {
+    margin-right: 10px; /* Space between icon and text */
+    margin-left: 0;
+}
+
+/* Booking Form */
+.booking-form-container {
+    border-top: 1px solid var(--card-border);
+    padding-top: 25px;
+    text-align: left;
+}
+
+.booking-form-container h3 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #555;
+}
+
+.form-group input[type="text"],
+.form-group input[type="tel"],
+.form-group input[type="email"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--card-border);
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(68, 100, 114, 0.2);
+}
+
+#booking-form button[type="submit"] {
+    width: 100%;
+    margin-top: 10px;
+    padding: 15px;
+}
+
+#form-success-message {
+    text-align: center;
+    padding: 15px;
+    background-color: #d4edda; /* Light green */
+    color: #155724; /* Dark green */
+    border: 1px solid #c3e6cb;
+    border-radius: 5px;
+}
+
+/* Responsive Adjustments (Optional - primarily mobile focus) */
+@media (min-width: 600px) {
+    /* Removed container media query */
+
+    .card-options {
+       /* Could go to 4 columns on wider screens if needed, but 2 is fine */
+    }
+}
+
+/* RTL (Arabic) Specific Styles */
+html[lang="ar"] {
+    direction: rtl;
+}
+
+html[lang="ar"] body {
+    /* Add an Arabic-friendly font if available, otherwise fallback */
+    font-family: 'Tahoma', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+/* Adjust icon positioning for RTL */
+html[lang="ar"] .btn i {
+    margin-right: 8px; /* Swap margin */
+    margin-left: -5px;
+}
+
+html[lang="ar"] .btn-prev i {
+    margin-left: 8px; /* Swap margin */
+    margin-right: -5px;
+}
+
+html[lang="ar"] .navigation-buttons .btn-next,
+html[lang="ar"] .navigation-buttons .btn-submit {
+    margin-left: 0; /* Remove left margin */
+    margin-right: auto; /* Push next/submit to the left */
+}
+
+html[lang="ar"] #recommendations {
+    /* text-align: right; <- Removed this */
+}
+
+html[lang="ar"] #recommendations ul {
+    padding-right: 0; /* Ensure no right padding on the list itself */
+    padding-left: 0; /* Ensure no left padding either */
+}
+
+html[lang="ar"] #recommendations li {
+    padding-right: 0; /* Remove right padding */
+    padding-left: 20px; /* Add left padding for the icon */
+    text-align: right; /* Align text content to the right */
+    position: relative; /* Ensure ::before is positioned relative to li */
+}
+
+html[lang="ar"] #recommendations li::before {
+    right: auto; /* Reset right positioning */
+    left: 0; /* Position icon to the left */
+    /* Ensure other ::before styles like position:absolute are inherited or defined */
+}
+
+html[lang="ar"] .booking-form-container {
+    text-align: right; /* Align form elements right */
+}
+
+html[lang="ar"] .form-group label {
+    text-align: right; /* Align labels right */
+}
+
+html[lang="ar"] .btn-contact i {
+    margin-left: 10px; /* Swap margin */
+    margin-right: 0;
+}
+
+/* Flip arrows for RTL */
+html[lang="ar"] .btn-next i::before {
+    content: "\f060"; /* Font Awesome left arrow */
+}
+
+html[lang="ar"] .btn-prev i::before {
+    content: "\f061"; /* Font Awesome right arrow */
+}

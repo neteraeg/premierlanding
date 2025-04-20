@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en"> <!-- Default language -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Title will be set dynamically -->
+    <title>Premier Health Clinics - Find Your Best Self</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome CDN (using version 6) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="icon" href="https://premiercare-eg.com/assets/img/logo.png"> <!-- Favicon -->
+
+    <!-- Snap Pixel Code -->
+    <script type='text/javascript'>
+    (function(e,t,n){if(e.snaptr)return;var a=e.snaptr=function()
+    {a.handleRequest?a.handleRequest.apply(a,arguments):a.queue.push(arguments)};
+    a.queue=[];var s='script';r=t.createElement(s);r.async=!0;
+    r.src=n;var u=t.getElementsByTagName(s)[0];
+    u.parentNode.insertBefore(r,u);})(window,document,
+    'https://sc-static.net/scevent.min.js');
+
+    snaptr('init', 'b949f569-aa1d-4d3b-911c-1fe2fae20af6', {
+    // 'user_email': '__INSERT_USER_EMAIL__'
+    });
+
+    snaptr('track', 'PAGE_VIEW');
+
+    </script>
+    <!-- End Snap Pixel Code -->
+
+</head>
+<body>
+
+    <!-- Step 0: Language Selection -->
+    <div id="step-0" class="step active"> <!-- Added active class here -->
+         <img src="https://premiercare-eg.com/assets/img/logo.png" alt="Premier Health Clinics Logo" class="logo step-logo">
+         <h2 data-translate-key="lang_select_heading">Choose your language:</h2>
+         <div class="card-options">
+             <div class="card lang-card" data-lang="en">
+                 <span class="lang-flag">🇬🇧</span> <!-- UK Flag Emoji -->
+                 <span data-translate-key="lang_english">English</span>
+             </div>
+             <div class="card lang-card" data-lang="ar">
+                 <span class="lang-flag">🇸🇦</span> <!-- Saudi Arabia Flag Emoji -->
+                  <span data-translate-key="lang_arabic">العربية</span>
+              </div>
+          </div>
+          <!-- Optional Phone Input -->
+          <div class="initial-phone-container" style="margin-top: 30px; text-align: center;">
+              <label for="initial-phone" style="display: block; margin-bottom: 8px; font-size: 0.9em; color: #555;" data-translate-key="initial_phone_label">Enter phone for quick callback (optional):</label>
+              <input type="tel" id="initial-phone" name="initial-phone" placeholder="e.g., 01xxxxxxxxx" style="padding: 10px; border: 1px solid var(--card-border); border-radius: 5px; width: 80%; max-width: 300px;">
+          </div>
+          <!-- No navigation needed here, selection proceeds -->
+     </div>
+
+    <!-- Progress Indicator (Now hidden until language is selected) -->
+    <div class="progress-indicator" style="visibility: hidden;">
+        <span id="progress-text" data-translate-key="progress_step">Step 1 of 3</span> <!-- Key for pattern -->
+        <div class="progress-bar-container">
+            <div id="progress-bar" class="progress-bar"></div>
+        </div>
+    </div>
+
+    <!-- Step 1: Gender -->
+    <div id="step-1" class="step">
+        <img src="https://premiercare-eg.com/assets/img/logo.png" alt="Premier Health Clinics Logo" class="logo step-logo">
+        <h2 data-translate-key="step1_heading">First, tell us about you:</h2>
+        <div class="card-options">
+            <div class="card" data-value="Male">
+                <i class="fas fa-person fa-3x"></i>
+                <span data-translate-key="gender_male">Male</span>
+            </div>
+            <div class="card" data-value="Female">
+                <i class="fas fa-person-dress fa-3x"></i>
+                <span data-translate-key="gender_female">Female</span>
+            </div>
+        </div>
+        <div class="navigation-buttons">
+            <button class="btn btn-next" disabled data-translate-key="btn_next">Next <i class="fas fa-arrow-right"></i></button>
+        </div>
+    </div>
+
+    <!-- Step 2: Need -->
+    <div id="step-2" class="step">
+        <img src="https://premiercare-eg.com/assets/img/logo.png" alt="Premier Health Clinics" class="logo step-logo">
+        <h2 data-translate-key="step2_heading">What brings you here today?</h2>
+        <div class="card-options">
+            <div class="card" data-value="Skin">
+                <i class="fas fa-spa fa-3x"></i>
+                <span data-translate-key="need_skin">Skin Concerns</span>
+            </div>
+            <div class="card" data-value="Energy">
+                <i class="fas fa-bolt fa-3x"></i>
+                <span data-translate-key="need_energy">Low Energy</span>
+            </div>
+            <div class="card" data-value="Vitamins">
+                <i class="fas fa-pills fa-3x"></i>
+                <span data-translate-key="need_vitamins">Vitamins Deficiency</span>
+            </div>
+            <div class="card" data-value="Weight Loss">
+                <i class="fas fa-weight-scale fa-3x"></i>
+                <span data-translate-key="need_weight">Weight Loss</span>
+            </div>
+        </div>
+         <div class="navigation-buttons">
+            <button class="btn btn-prev" data-translate-key="btn_prev"><i class="fas fa-arrow-left"></i> Previous</button>
+            <button class="btn btn-next" disabled data-translate-key="btn_next">Next <i class="fas fa-arrow-right"></i></button>
+        </div>
+    </div>
+
+    <!-- Step 3: Age -->
+    <div id="step-3" class="step">
+        <img src="https://premiercare-eg.com/assets/img/logo.png" alt="Premier Health Clinics Logo" class="logo step-logo">
+        <h2 data-translate-key="step3_heading">How young are you?</h2>
+        <div class="slider-container">
+            <input type="range" id="age-slider" name="age" min="18" max="80" value="30">
+            <span id="age-value">30 <span data-translate-key="age_suffix">years</span></span> <!-- Suffix needs translation -->
+        </div>
+         <div class="navigation-buttons">
+            <button class="btn btn-prev" data-translate-key="btn_prev"><i class="fas fa-arrow-left"></i> Previous</button>
+            <button class="btn btn-submit" data-translate-key="btn_results">See My Results <i class="fas fa-check"></i></button>
+        </div>
+    </div>
+
+    <!-- Results Screen -->
+    <div id="results-screen" class="step">
+         <img src="https://premiercare-eg.com/assets/img/logo.png" alt="Premier Health Clinics Logo" class="logo step-logo">
+        <h2 data-translate-key="results_heading">Your Personalized Recommendations!</h2>
+            <div id="recommendations">
+                <p data-translate-key="results_intro">Based on your selections, we recommend the following:</p>
+                <ul>
+                    <!-- Service names will be populated by JS and need translation -->
+                </ul>
+            </div>
+
+            <div class="contact-options">
+                <h3 data-translate-key="results_contact_heading">Ready to start your journey?</h3>
+                <a href="tel:+201200644663" id="call-btn" class="btn btn-secondary btn-contact">
+                    <i class="fas fa-phone"></i> <span data-translate-key="btn_call">Call Us Now</span>
+                </a>
+                <a href="https://wa.me/201200644663" id="whatsapp-btn" target="_blank" class="btn btn-secondary btn-contact">
+                    <i class="fab fa-whatsapp"></i> <span data-translate-key="btn_whatsapp">WhatsApp Us</span>
+                </a>
+            </div>
+
+            
+            <div class="booking-form-container">
+                <h3 data-translate-key="results_form_heading">Or, request a callback:</h3>
+                <form id="booking-form" action="process_booking.php" method="POST">
+                    <div class="form-group">
+                        <label for="name" data-translate-key="form_name">Name:</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone" data-translate-key="form_phone">Phone Number:</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" data-translate-key="form_email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <input type="hidden" id="selected-gender" name="gender">
+                    <input type="hidden" id="selected-need" name="need">
+                    <input type="hidden" id="selected-age" name="age">
+                    <button type="submit" class="btn btn-primary" data-translate-key="btn_callback">Request Callback</button>
+                </form>
+                 <div id="form-success-message" style="display: none; margin-top: 15px; color: green; font-weight: bold;" data-translate-key="form_success">
+                    Thank you! We've received your request and will contact you soon.
+                 </div>
+            </div>
+        </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
