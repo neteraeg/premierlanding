@@ -1,8 +1,19 @@
 <?php
 
-// --- Error Reporting (Temporary debug enabled) ---
+// --- Enhanced Debugging ---
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+ini_set('log_errors', 1);
+ini_set('error_log', __DIR__ . '/php_errors.log');
+
+// Detailed request logging
+file_put_contents(__DIR__ . '/requests.log', 
+    date('[Y-m-d H:i:s]') . " " .
+    $_SERVER['REMOTE_ADDR'] . " " .
+    $_SERVER['REQUEST_METHOD'] . " " .
+    $_SERVER['REQUEST_URI'] . "\n",
+    FILE_APPEND
+);
 
 // --- Debug Logging ---
 $debugLogPath = __DIR__ . '/debug.log';
@@ -37,7 +48,25 @@ log_debug('Script initialized', [
     'client_ip' => $_SERVER['REMOTE_ADDR'] ?? 'none',
     'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? 'none'
 ]);
-$response = ['status' => 'error', 'message' => 'Unknown error']; // Default error response
+$response = [
+    'status' => 'error',
+    'message' => 'Unknown error',
+    'debug' => [
+        'received_data' => $_REQUEST,
+        'db_config' => [
+            'host' => $dbHost,
+            'user' => $dbUser,
+            'database' => $dbName,
+            'table' => $dbTable
+        ],
+        'server_info' => [
+            'php_version' => phpversion(),
+            'mysql_client' => mysqli_get_client_version(),
+            'remote_ip' => $_SERVER['REMOTE_ADDR']
+        ],
+        'execution_flow' => []
+    ]
+];
 
 // 1. Get Visitor Info
 $ipAddress = filter_var($_SERVER['REMOTE_ADDR'] ?? 'UNKNOWN', FILTER_VALIDATE_IP);
@@ -68,7 +97,16 @@ if ($conn->connect_error) {
     $response['message'] = "Database Connection Error: " . $conn->connect_error;
     http_response_code(500);
     header('Content-Type: application/json');
-    echo json_encode($response);
+    // Add debug logs to response
+$response['debug']['log_files'] = [
+    'php_errors' => __DIR__ . '/php_errors.log',
+    'requests' => __DIR__ . '/requests.log',
+    'debug_log' => __DIR__ . '/debug.log'
+];
+
+// Final debug log
+log_debug('Sending final response', $response);
+echo json_encode($response, JSON_PRETTY_PRINT);
     exit;
 }
 
@@ -98,6 +136,19 @@ if ($bindSuccess === false) {
 }
 
 // 5. Execute the statement and check result
+// Track execution flow
+$response['debug']['execution_flow'][] = 'Reached query execution';
+
+// Log final query with parameters
+$response['debug']['final_query'] = [
+    'sql' => $sql,
+    'bound_params' => [
+        'ip_address' => $ipAddress,
+        'user_agent' => $userAgent,
+        'phone_number' => $phoneNumber
+    ]
+];
+
 if ($stmt->execute()) {
     if ($stmt->affected_rows > 0) {
         $response['status'] = 'success';
