@@ -1,7 +1,7 @@
 let visitLogged = false; // Flag to prevent multiple logs per session
 let currentLang = 'en'; // Default language
 let currentStepIndexState = 0; // Start at step 0 (language selection)
-const totalQuizSteps = 3; // Gender, Need, Age (Quiz steps only)
+const totalQuizSteps = 3; // Gender, Need, Age (Quiz steps only
 
 // --- Translations Object ---
 const translations = {
