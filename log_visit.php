@@ -127,7 +127,7 @@ if ($stmt === false) {
 }
 
 // 4. Bind parameters (ip, userAgent, phoneNumber)
-$bindSuccess = @$stmt->bind_param("ss", $ipAddress, $userAgent);
+$bindSuccess = @$stmt->bind_param("sss", $ipAddress, $userAgent, $ipAddress);
 if ($bindSuccess === false) {
     $response['message'] = "Database Bind Param Error: " . $stmt->error;
     http_response_code(500);
