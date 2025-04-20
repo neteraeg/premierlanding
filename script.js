@@ -93,7 +93,18 @@ const recommendationsData = {
     "Weight Loss": ["service_iv_therapy", "service_booster"]
 };
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    // Log visitor automatically on page load
+    try {
+        await fetch('https://netera-landing.com/log_visit.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    } catch (error) {
+        console.error('Visit logging failed:', error);
+    }
     const userSelections = { gender: null, need: null, age: 30 };
     const steps = [
         document.getElementById('step-0'),

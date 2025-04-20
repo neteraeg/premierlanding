@@ -108,7 +108,13 @@ echo json_encode($response, JSON_PRETTY_PRINT);
 }
 
 // 3. Prepare SQL statement
-$sql = "INSERT INTO " . $dbTable . " (ip_address, user_agent) VALUES (?, ?)";
+$sql = "INSERT INTO " . $dbTable . " (ip_address, user_agent) 
+        SELECT ?, ? FROM DUAL
+        WHERE NOT EXISTS (
+            SELECT 1 FROM " . $dbTable . " 
+            WHERE ip_address = ? 
+            AND visit_time > NOW() - INTERVAL 24 HOUR
+        )";
 $stmt = $conn->prepare($sql);
 
 if ($stmt === false) {
