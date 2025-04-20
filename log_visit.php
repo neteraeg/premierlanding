@@ -1,14 +1,16 @@
 <?php
 
-// --- Error Reporting (Keep disabled) ---
-error_reporting(0);
-ini_set('display_errors', 0);
+// --- Error Reporting (Temporary debug enabled) ---
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 // --- Database Configuration ---
-$dbHost = 'localhost'; // Changed from netera-landing.com
+$dbHost = 'localhost';
 $dbUser = 'u305610349_premier';
 $dbPass = 'g8mkrJS&S';
 $dbName = 'u305610349_premier';
+// Verify these credentials match your actual database setup
+// Ensure the database user has proper privileges
 $dbTable = 'visitor_logs';
 
 // --- Script Logic ---

@@ -127,9 +127,16 @@ p {
     background-color: #8a7c74; /* Darker shade */
 }
 
-.btn:disabled {
+.btn[disabled] {
     background-color: #cccccc;
     cursor: not-allowed;
+    opacity: 0.6;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.btn {
+    transition: all 0.3s ease;
 }
 
 .btn:active {

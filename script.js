@@ -68,27 +68,29 @@ const recommendationsData = {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-    const userSelections = {
-        gender: null,
-        need: null,
-        age: 30
-    };
-
-    // Step elements and progress indicator setup
+    // Initialize state
+    const userSelections = { gender: null, need: null, age: 30 };
+    let currentStepIndexState = 0;
+    
+    // Get step elements
     const step0 = document.getElementById('step-0');
     const step1 = document.getElementById('step-1');
     const step2 = document.getElementById('step-2');
     const step3 = document.getElementById('step-3');
     const resultsScreen = document.getElementById('results-screen');
-    const allStepElements = [step0, step1, step2, step3, resultsScreen].filter(el => el !== null);
-    const progressIndicator = document.querySelector('.progress-indicator');
+    const allStepElements = [step0, step1, step2, step3, resultsScreen].filter(Boolean);
 
-    if (allStepElements.length !== 5) {
-        console.error("Missing step elements");
-        return;
+    if (allStepElements.length !== 5) return console.error("Missing step elements");
+
+    // -- Core Functions --
+    function showStep(stepIndexToShow) {
+        currentStepIndexState = stepIndexToShow;
+        allStepElements.forEach((el, i) => el.classList.toggle('active', i === stepIndexToShow));
+        updateProgressBar();
+        window.scrollTo(0, 0);
     }
 
-    // -- Functions --
+    // -- Translation Functions --
     function applyTranslations(lang) {
         currentLang = lang;
         document.documentElement.lang = lang;
@@ -107,6 +109,24 @@ document.addEventListener('DOMContentLoaded', () => {
         updateAgeDisplay();
         if (resultsScreen?.classList.contains('active')) generateRecommendations();
     }
+
+    function updateProgressBar() {
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+        if (!progressBar || !progressText) return;
+
+        const quizStepNumber = currentStepIndexState > 0 ? currentStepIndexState - 1 : 0;
+        const progress = quizStepNumber > 0 && quizStepNumber <= totalQuizSteps
+                       ? ((quizStepNumber / totalQuizSteps) * 100)
+                       : 0;
+
+        progressBar.style.width = `${progress}%`;
+        const stepPattern = translations[currentLang]?.progress_step || "Step {step} of {total}";
+        progressText.textContent = stepPattern
+            .replace('{step}', quizStepNumber)
+            .replace('{total}', totalQuizSteps);
+    }
+
 
     function updateAgeDisplay() {
         const ageValueSpan = document.getElementById('age-value');
@@ -151,9 +171,81 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Rest of the event listeners remain unchanged
-    // [Quiz cards, age slider, navigation buttons etc. unchanged]
-    
+    function handleCardSelection(event) {
+        const selectedCard = event.currentTarget;
+        const stepElement = selectedCard.closest('.step');
+        const options = stepElement.querySelectorAll('.card');
+        const nextButton = stepElement.querySelector('.btn-next');
+
+        options.forEach(opt => opt.classList.remove('selected'));
+        selectedCard.classList.add('selected');
+
+        if (stepElement.id === 'step-1') {
+            userSelections.gender = selectedCard.dataset.value;
+        } else if (stepElement.id === 'step-2') {
+            userSelections.need = selectedCard.dataset.value;
+        }
+
+        nextButton.disabled = false;
+        nextButton.style.opacity = '1';
+        nextButton.style.pointerEvents = 'auto';
+    }
+
+    function generateRecommendations() {
+        const recommendationsList = document.querySelector('#recommendations ul');
+        recommendationsList.innerHTML = '';
+        
+        const services = recommendationsData[userSelections.need] || [];
+        services.forEach(serviceKey => {
+            const li = document.createElement('li');
+            li.textContent = translations[currentLang][serviceKey];
+            recommendationsList.appendChild(li);
+        });
+    }
+
+    function checkFormSuccess() {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('success') === '1') {
+            const formSuccessMessage = document.getElementById('form-success-message');
+            formSuccessMessage.style.display = 'block';
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+    }
+
+    // Initialize age slider
+    const ageSlider = document.getElementById('age-slider');
+    if (ageSlider) {
+        ageSlider.addEventListener('input', () => {
+            userSelections.age = ageSlider.value;
+            updateAgeDisplay();
+        });
+    }
+
+    // Initialize navigation buttons
+    document.querySelectorAll('.btn-next').forEach(button => {
+        button.addEventListener('click', () => showStep(currentStepIndexState + 1));
+    });
+
+    // Handle results button click
+    document.querySelector('.btn-submit').addEventListener('click', (e) => {
+        e.preventDefault();
+        // Update final selections
+        userSelections.age = parseInt(document.getElementById('age-slider').value);
+        document.getElementById('selected-age').value = userSelections.age;
+        // Show results
+        showStep(4);
+        generateRecommendations();
+    });
+
+    document.querySelectorAll('.btn-prev').forEach(button => {
+        button.addEventListener('click', () => showStep(currentStepIndexState - 1));
+    });
+
+    // Add event listeners for gender/need selection cards
+    document.querySelectorAll('#step-1 .card, #step-2 .card').forEach(card => {
+        card.addEventListener('click', handleCardSelection);
+    });
+
     // Initial setup
     showStep(0);
     checkFormSuccess();
