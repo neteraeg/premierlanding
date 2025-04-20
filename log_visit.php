@@ -72,12 +72,9 @@ $response = [
 $ipAddress = filter_var($_SERVER['REMOTE_ADDR'] ?? 'UNKNOWN', FILTER_VALIDATE_IP);
 // Use htmlspecialchars instead of deprecated FILTER_SANITIZE_STRING
 $userAgent = isset($_SERVER['HTTP_USER_AGENT']) ? htmlspecialchars($_SERVER['HTTP_USER_AGENT'], ENT_QUOTES, 'UTF-8') : 'UNKNOWN';
-$phoneNumberInput = isset($_POST['phoneNumber']) ? trim($_POST['phoneNumber']) : '';
-$phoneNumber = !empty($phoneNumberInput) ? htmlspecialchars($phoneNumberInput, ENT_QUOTES, 'UTF-8') : null;
 log_debug('Visitor info collected', [
     'ip' => $ipAddress,
-    'user_agent' => $userAgent,
-    'phone_number' => $phoneNumber ? 'provided' : 'not_provided'
+    'user_agent' => $userAgent
 ]);
 
 
@@ -111,7 +108,7 @@ echo json_encode($response, JSON_PRETTY_PRINT);
 }
 
 // 3. Prepare SQL statement
-$sql = "INSERT INTO " . $dbTable . " (ip_address, user_agent, phone_number) VALUES (?, ?, ?)";
+$sql = "INSERT INTO " . $dbTable . " (ip_address, user_agent) VALUES (?, ?)";
 $stmt = $conn->prepare($sql);
 
 if ($stmt === false) {
@@ -124,7 +121,7 @@ if ($stmt === false) {
 }
 
 // 4. Bind parameters (ip, userAgent, phoneNumber)
-$bindSuccess = @$stmt->bind_param("sss", $ipAddress, $userAgent, $phoneNumber);
+$bindSuccess = @$stmt->bind_param("ss", $ipAddress, $userAgent);
 if ($bindSuccess === false) {
     $response['message'] = "Database Bind Param Error: " . $stmt->error;
     http_response_code(500);
@@ -145,7 +142,7 @@ $response['debug']['final_query'] = [
     'bound_params' => [
         'ip_address' => $ipAddress,
         'user_agent' => $userAgent,
-        'phone_number' => $phoneNumber
+        // Phone number parameter removed
     ]
 ];
 
