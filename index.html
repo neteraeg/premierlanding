@@ -10,24 +10,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="icon" href="https://premiercare-eg.com/assets/img/logo.png"> <!-- Favicon -->
 
-    <!-- Snap Pixel Code -->
-    <script type='text/javascript'>
-    (function(e,t,n){if(e.snaptr)return;var a=e.snaptr=function()
-    {a.handleRequest?a.handleRequest.apply(a,arguments):a.queue.push(arguments)};
-    a.queue=[];var s='script';r=t.createElement(s);r.async=!0;
-    r.src=n;var u=t.getElementsByTagName(s)[0];
-    u.parentNode.insertBefore(r,u);})(window,document,
-    'https://sc-static.net/scevent.min.js');
-
-    snaptr('init', 'b949f569-aa1d-4d3b-911c-1fe2fae20af6', {
-    // 'user_email': '__INSERT_USER_EMAIL__'
-    });
-
-    snaptr('track', 'PAGE_VIEW');
-
-    </script>
-    <!-- End Snap Pixel Code -->
-
 </head>
 <body>
 
@@ -141,27 +123,9 @@
             
             <div class="booking-form-container">
                 <h3 data-translate-key="results_form_heading">Or, request a callback:</h3>
-                <form id="booking-form" action="process_booking.php" method="POST">
-                    <div class="form-group">
-                        <label for="name" data-translate-key="form_name">Name:</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="phone" data-translate-key="form_phone">Phone Number:</label>
-                        <input type="tel" id="phone" name="phone" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email" data-translate-key="form_email">Email:</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <input type="hidden" id="selected-gender" name="gender">
-                    <input type="hidden" id="selected-need" name="need">
-                    <input type="hidden" id="selected-age" name="age">
-                    <button type="submit" class="btn btn-primary" data-translate-key="btn_callback">Request Callback</button>
-                </form>
-                 <div id="form-success-message" style="display: none; margin-top: 15px; color: green; font-weight: bold;" data-translate-key="form_success">
-                    Thank you! We've received your request and will contact you soon.
-                 </div>
+                <div class="contact-notice">
+                    <p data-translate-key="direct_contact">Contact us directly via phone or WhatsApp for consultations and appointments.</p>
+                </div>
             </div>
         </div>
 
