@@ -1,4 +1,3 @@
-let visitLogged = false;
 let currentLang = 'en';
 let currentStepIndexState = 0;
 const totalQuizSteps = 3;
@@ -94,17 +93,6 @@ const recommendationsData = {
 };
 
 document.addEventListener('DOMContentLoaded', async () => {
-    // Log visitor automatically on page load
-    try {
-        await fetch('https://netera-landing.com/log_visit.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-    } catch (error) {
-        console.error('Visit logging failed:', error);
-    }
     const userSelections = { gender: null, need: null, age: 30 };
     const steps = [
         document.getElementById('step-0'),
@@ -241,15 +229,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // Form submission
-    document.getElementById('booking-form')?.addEventListener('submit', (e) => {
-        e.preventDefault();
-        document.getElementById('selected-gender').value = userSelections.gender;
-        document.getElementById('selected-need').value = userSelections.need;
-        document.getElementById('selected-age').value = userSelections.age;
-        e.target.submit();
-    });
-
     // Results button handler (event delegation)
     document.addEventListener('click', (e) => {
         if (e.target.closest('.btn-submit')) {
@@ -264,5 +243,4 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Initialize translations first
     applyTranslations(currentLang);
     showStep(0);
-    checkFormSuccess();
 });
