@@ -128,9 +128,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         if(step.id === 'step-1') userSelections.gender = card.dataset.value;
         if(step.id === 'step-2') userSelections.need = card.dataset.value;
         
-        // Enable next button
-        const nextBtn = step.querySelector('.btn-next');
-        if(nextBtn) nextBtn.disabled = false;
+        // Auto-advance to next step
+        showStep(currentStepIndexState + 1);
     }
 
     function showStep(stepIndex) {
