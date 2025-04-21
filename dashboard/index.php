@@ -17,6 +17,7 @@
     </div>
     
     <div class="chart-container">
+    <canvas id="analytics-chart" width="800" height="400"></canvas>
         <div class="chart-card">
             <h3>Daily Visits</h3>
             <canvas id="daily-visits"></canvas>
