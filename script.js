@@ -5,6 +5,7 @@ const totalQuizSteps = 3;
 // --- Translations Object ---
 const translations = {
     en: {
+        welcome_message: "Discover your personalized health journey in just 1 minute. Let's find the perfect services for you!",
         page_title: "Premier Health Clinics - Find Your Best Self",
         lang_select_heading: "Choose your language:",
         lang_english: "English",
@@ -46,6 +47,7 @@ const translations = {
     ar: {
         page_title: "بريمير كلينكس - اكتشف أفضل نسخة منك",
         lang_select_heading: "اختر لغتك:",
+        welcome_message: "اكتشف رحلتك الصحية المخصصة في دقيقة واحدة فقط. لنكتشف الخدمات المثالية لك!",
         lang_english: "English",
         lang_arabic: "العربية",
         step1_heading: "أولاً، أخبرنا عنك:",
