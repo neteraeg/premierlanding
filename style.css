@@ -45,6 +45,19 @@ p {
     color: #555;
 }
 
+.welcome-text {
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    margin: 15px 0 25px;
+    text-align: center;
+    line-height: 1.5;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
 .logo {
     max-width: 150px;
     margin-bottom: 20px;
@@ -61,14 +74,20 @@ p {
 .step {
     display: none; /* Hide all steps initially */
     animation: fadeIn 0.5s ease-in-out;
-    padding: 30px 15px; /* Add padding directly to steps */
-    max-width: 600px; /* Limit width for readability on larger screens */
-    margin: 0 auto; /* Center steps */
+    padding: 30px 15px;
+    max-width: 500px; /* Consistent with welcome text width */
+    margin: 0 auto;
     min-height: 80vh; /* Ensure step takes up significant height */
-    /* display: flex; */ /* Base display is none, active class handles flex */
+    box-sizing: border-box; /* Include padding in width calculation */
     flex-direction: column;
     justify-content: center; /* Center content vertically */
     text-align: center;
+}
+
+/* First step specific styling */
+#step-0 {
+    max-width: 320px; /* Adjusted to 320px width */
+    padding: 25px 15px; /* Reduced vertical padding */
 }
 
 /* Removed rule that forced #step-0 to always display */
@@ -116,6 +135,11 @@ p {
 
 .btn-primary:hover {
     background-color: #36505a; /* Darker shade */
+}
+
+.btn-submit {
+    background-color: var(--primary-color);
+    color: var(--button-text);
 }
 
 .btn-secondary {
