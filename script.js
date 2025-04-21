@@ -230,7 +230,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Results button handler (event delegation)
     document.addEventListener('click', (e) => {
-        if (e.target.closest('.btn-submit')) {
+        if (e.target.closest('.btn-primary')) {
             showStep(4);
             generateRecommendations();
         }
